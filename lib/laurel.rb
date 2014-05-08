@@ -1,5 +1,7 @@
 require "laurel/version"
 
 module Laurel
-  # Your code goes here...
+  def self.create_project(name)
+    Dir.mkdir(name)
+  end
 end

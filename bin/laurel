@@ -1,3 +1,22 @@
 #!/usr/bin/env ruby
 
+require 'bundler'
+Bundler.require
+require 'thor'
+require 'active_support'
+require 'active_support/core_ext'
+require 'yaml'
+
 require 'laurel'
+
+class LaurelCLI < Thor
+  desc 'create', 'create resource'
+  def create(type, name)
+    case type
+    when 'project'
+      Laurel.create_project(name)
+    end
+  end
+end
+
+LaurelCLI.start(ARGV)
