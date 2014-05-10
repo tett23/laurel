@@ -6,6 +6,7 @@ require 'thor'
 require 'active_support'
 require 'active_support/core_ext'
 require 'yaml'
+require 'hashie'
 
 require 'laurel'
 
@@ -14,8 +15,7 @@ class LaurelCLI < Thor
   def create(type, name)
     case type
     when 'project'
-      template_dir = File.join(Laurel::ROOT, 'templates')
-      FileUtils.cp_r(template_dir, name) unless Dir.exists?(name)
+      Laurel.create_project(name)
     end
   end
 
