@@ -5,6 +5,7 @@ Bundler.require
 require 'thor'
 require 'active_support'
 require 'active_support/core_ext'
+require 'redcloth'
 require 'yaml'
 require 'hashie'
 
@@ -22,6 +23,11 @@ class LaurelCLI < Thor
   desc 'add', 'add page'
   def add(name=nil)
     Laurel.add_page(name)
+  end
+
+  desc 'build', 'build'
+  def build(target)
+    Laurel.build(target)
   end
 end
 

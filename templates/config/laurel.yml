@@ -1,4 +1,5 @@
 directories:
   posts: entries
   layouts: layouts
+  build: build
 format: textile

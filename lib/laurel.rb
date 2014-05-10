@@ -21,6 +21,15 @@ module Laurel
     full_path
   end
 
+  def self.build(file)
+    if file === 'all'
+      entries_path = File.expand_path(File.join(Laurel::Config.directories.posts))
+      Dir.glob(File.join(entries_path, '**', '*')).each do |build_file|
+        self.build_item(build_file)
+      end
+    end
+  end
+
   private
   def self.generate_page_name(flagment=nil)
     path = if flagment.nil?
@@ -51,5 +60,33 @@ module Laurel
   def self.directory?(flagment)
     expanded_flagment = File.expand_path(File.join(Laurel::Config.directories.posts, flagment))
     Dir.exists?(expanded_flagment)
+  end
+
+  def self.build_item(item)
+    return if Dir.exists?(item)
+
+    base = item.gsub(File.expand_path(Laurel::Config.directories.posts)+File::SEPARATOR, '')
+    compiled = self.compile_resource(item)
+    self.write_out(File.join(Laurel::Config.directories.build, base), compiled)
+
+    #p dir, base
+  end
+
+  def self.compile_resource(path)
+    f = open(path)
+    compiled = RedCloth.new(f.read).to_html
+    f.close
+
+    compiled
+  end
+
+  def self.write_out(path, body)
+    base = path.gsub(/\/#{File.basename(path)}$/, '')
+    FileUtils.mkdir_p(base)
+
+    out_path = path.gsub(File.extname(path), '.html')
+    f = open(out_path, 'w')
+    f.print(body)
+    f.close
   end
 end

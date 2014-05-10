@@ -4,6 +4,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'yaml'
 require 'hashie'
+require 'redcloth'
 
 TEST_DIRECTORY = 'rspec_test_dir'
 

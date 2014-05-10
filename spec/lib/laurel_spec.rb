@@ -36,4 +36,12 @@ describe Laurel do
       end
     end
   end
+
+  describe :build do
+    describe :all do
+      it do
+        Laurel.build('all')
+      end
+    end
+  end
 end
