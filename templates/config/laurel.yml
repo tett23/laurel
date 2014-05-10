@@ -1,4 +1,4 @@
 directories:
-  posts: posts
+  posts: entries
   layouts: layouts
 format: textile
