@@ -1,4 +1,7 @@
+require 'singleton'
+
 require "laurel/version"
+require 'laurel/config'
 
 module Laurel
   ROOT = File.expand_path(File.join(__FILE__, '../../'))
@@ -17,10 +20,5 @@ module Laurel
 
   def self.generate_page_name
     Digest::MD5.hexdigest(Time.now.to_s)+'.textile'
-  end
-
-  private
-  def self.config
-    Hashie::Mash.new(YAML.load_file('config/laurel.yml'))
   end
 end
