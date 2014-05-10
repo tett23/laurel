@@ -24,11 +24,11 @@ module Laurel
   private
   def self.generate_page_name(flagment=nil)
     path = if flagment.nil?
-      file = Digest::MD5.hexdigest(Time.now.to_s)+Laurel::Config.format
+      file = Digest::MD5.hexdigest(Time.now.to_s)
 
       File.expand_path(File.join(Laurel::Config.directories.posts, file))
     elsif self.directory?(flagment)
-      file = Digest::MD5.hexdigest(Time.now.to_s)+Laurel::Config.format
+      file = Digest::MD5.hexdigest(Time.now.to_s)
 
       File.expand_path(File.join(flagment, file))
     elsif self.file?(flagment)
