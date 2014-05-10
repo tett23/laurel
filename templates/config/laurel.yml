@@ -1,3 +1,4 @@
 directories:
   posts: posts
   layouts: layouts
+format: textile

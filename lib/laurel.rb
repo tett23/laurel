@@ -12,43 +12,43 @@ module Laurel
   end
 
   def self.add_page(name=nil)
-    path = self.generate_page_name(name)
-    path += '.textile' unless File.extname(path) == '.textile'
-    dir = path.gsub(/^(.+)\/(.+)/, '\1')
-    FileUtils.mkdir_p(dir)
-    FileUtils.touch(path)
+    file_infomation = self.generate_page_name(name)
+    full_path = File.join(file_infomation[:dir], file_infomation[:file])
 
-    path
+    FileUtils.mkdir_p(file_infomation[:dir])
+    FileUtils.touch(full_path)
+
+    full_path
   end
 
   private
   def self.generate_page_name(flagment=nil)
-    filename = if flagment.nil?
-      file = Digest::MD5.hexdigest(Time.now.to_s)+'.textile'
+    path = if flagment.nil?
+      file = Digest::MD5.hexdigest(Time.now.to_s)+Laurel::Config.format
 
       File.expand_path(File.join(Laurel::Config.directories.posts, file))
-    elsif self.file?(flagment)
-      File.expand_path(flagment)
     elsif self.directory?(flagment)
-      file = Digest::MD5.hexdigest(Time.now.to_s)+'.textile'
+      file = Digest::MD5.hexdigest(Time.now.to_s)+Laurel::Config.format
 
       File.expand_path(File.join(flagment, file))
+    elsif self.file?(flagment)
+      File.expand_path(flagment)
     end
+    path += '.'+Laurel::Config.format if File.extname(path) == ''
 
-    filename
+    {
+      file: File.basename(path),
+      dir: path.gsub(/\/#{File.basename(path)}$/, '')
+    }
   end
 
   def self.file?(flagment)
-    return false if flagment.include?('/')
-
     expanded_flagment = File.expand_path(flagment)
     not File.directory?(expanded_flagment)
   end
 
   def self.directory?(flagment)
-    return true if flagment.include?('/')
-
     expanded_flagment = File.expand_path(flagment)
-    File.directory?(expanded_flagment)
+    Dir.exists?(expanded_flagment)
   end
 end

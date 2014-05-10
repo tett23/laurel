@@ -18,9 +18,14 @@ describe Laurel do
         expect(File).to exist(path)
       end
 
+      it 'フォーマットを指定してファイルを追加' do
+        path = Laurel.add_page('extension_test.md')
+        expect(File.extname(path)).to eq('.md')
+      end
+
       it '拡張子を追加させる' do
         path = Laurel.add_page('hoge')
-        expect(File.extname(path)).to eq('.textile')
+        expect(File.extname(path)).to eq('.'+Laurel::Config.format)
         expect(File).to exist(path)
       end
 
