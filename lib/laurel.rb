@@ -34,7 +34,7 @@ module Laurel
     elsif self.file?(flagment)
       File.expand_path(flagment)
     end
-    path += '.'+Laurel::Config.format if File.extname(path) == ''
+    path += '.'+Laurel::Config.format if File.extname(path).blank?
 
     {
       file: File.basename(path),
