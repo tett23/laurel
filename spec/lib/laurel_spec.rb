@@ -30,7 +30,8 @@ describe Laurel do
       end
 
       it 'ディレクトリを指定' do
-        path = Laurel.add_page('config')
+        FileUtils.mkdir_p(File.join(File.expand_path('./'), Laurel::Config.directories.posts, 'dir'))
+        path = Laurel.add_page('dir')
         expect(File).to exist(path)
       end
     end

@@ -26,14 +26,15 @@ module Laurel
     path = if flagment.nil?
       file = Digest::MD5.hexdigest(Time.now.to_s)
 
-      File.expand_path(File.join(Laurel::Config.directories.posts, file))
+      File.join(file)
     elsif self.directory?(flagment)
       file = Digest::MD5.hexdigest(Time.now.to_s)
 
-      File.expand_path(File.join(flagment, file))
+      File.join(flagment, file)
     elsif self.file?(flagment)
-      File.expand_path(flagment)
+      flagment
     end
+    path = File.expand_path(File.join(Laurel::Config.directories.posts, path)) unless path =~ /^\//
     path += '.'+Laurel::Config.format if File.extname(path).blank?
 
     {
@@ -43,12 +44,12 @@ module Laurel
   end
 
   def self.file?(flagment)
-    expanded_flagment = File.expand_path(flagment)
+    expanded_flagment = File.expand_path(File.join(Laurel::Config.directories.posts, flagment))
     not File.directory?(expanded_flagment)
   end
 
   def self.directory?(flagment)
-    expanded_flagment = File.expand_path(flagment)
+    expanded_flagment = File.expand_path(File.join(Laurel::Config.directories.posts, flagment))
     Dir.exists?(expanded_flagment)
   end
 end
