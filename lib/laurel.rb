@@ -12,4 +12,6 @@ module Laurel
   def self.generate_page_name
     Digest::MD5.hexdigest(Time.now.to_s)+'.textile'
   end
+
+  ROOT = File.expand_path(File.join(__FILE__, '../../'))
 end

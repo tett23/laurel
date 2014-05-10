@@ -14,7 +14,10 @@ class LaurelCLI < Thor
   def create(type, name)
     case type
     when 'project'
-      Laurel.create_project(name)
+      Laurel.create_project(name) unless Dir.exists?(name)
+
+      template_dir = File.join(Laurel::ROOT, 'templates')
+      FileUtils.cp_r(File.join(template_dir, 'config'), name) unless Dir.exists?(File.join(template_dir, name))
     end
   end
 
