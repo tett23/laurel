@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor'
   spec.add_dependency 'activesupport'
   spec.add_dependency 'RedCloth'
+  spec.add_dependency 'hashie'
 end
