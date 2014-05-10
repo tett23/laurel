@@ -17,6 +17,13 @@ class LaurelCLI < Thor
       Laurel.create_project(name)
     end
   end
+
+  desc 'add', 'add page'
+  def add(name=nil)
+    name = Laurel.generate_page_name() if name.nil?
+
+    Laurel.add_page(name)
+  end
 end
 
 LaurelCLI.start(ARGV)
